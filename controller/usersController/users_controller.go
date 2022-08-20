@@ -3,6 +3,7 @@ package usersController
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"bookstore/src/github.com/luckyparakh/bookstore_users-api/domain"
 	"bookstore/src/github.com/luckyparakh/bookstore_users-api/service"
@@ -12,7 +13,17 @@ import (
 )
 
 func GetUser(c *gin.Context) {
-	c.String(http.StatusNotImplemented, "implement me")
+	userId, userErr := strconv.ParseInt(c.Param("user_id"), 10, 64)
+	if userErr != nil {
+		err := errors.NewBadRequestError("User ID should be integer.")
+		c.JSON(err.Status, err)
+	}
+	result, err := service.GetUser(userId)
+	if err != nil {
+		c.JSON(err.Status, err)
+		return
+	}
+	c.JSON(http.StatusCreated, result)
 }
 
 func CreateUser(c *gin.Context) {
