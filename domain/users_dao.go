@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"bookstore/src/github.com/luckyparakh/bookstore_users-api/utils/dateUtils"
 	"bookstore/src/github.com/luckyparakh/bookstore_users-api/utils/errors"
 	"fmt"
 )
@@ -28,6 +29,7 @@ func (user *User) Save() *errors.RestErr {
 		}
 		return errors.NewBadRequestError(fmt.Sprintf("User with id %d already present.", user.Id))
 	}
+	user.DateCreated = dateUtils.GetNowString()
 	usersDB[user.Id] = user
 	return nil
 }
