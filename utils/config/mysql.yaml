@@ -1,0 +1,6 @@
+db:
+  dbname: "users_db"
+  dbpassword: "S3cr3t"
+  dbuser: "root"
+  dbport: "3306"
+  dbaddress: "localhost"

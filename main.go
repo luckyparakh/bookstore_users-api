@@ -2,10 +2,10 @@ package main
 
 import (
 	"bookstore/src/github.com/luckyparakh/bookstore_users-api/app"
-	"fmt"
+	"bookstore/src/github.com/luckyparakh/bookstore_users-api/logger"
 )
 
 func main() {
-	fmt.Println("Starting Users API")
+	logger.Info("about to start app")
 	app.StartApplication()
 }
