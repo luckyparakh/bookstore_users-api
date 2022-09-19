@@ -1,0 +1,8 @@
+# for this to work install rest client extension in vscode
+### User not found
+@host= localhost:8888
+GET http://{{host}}/users/12
+
+### User found
+@host= localhost:8888
+GET http://{{host}}/users/1

@@ -114,3 +114,18 @@ func Delete(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, map[string]string{"status": "delete"})
 }
+
+func Login(c *gin.Context) {
+	var req domain.LoginRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		restErr := errors.NewBadRequestError("invalid json body")
+		c.JSON(restErr.Status, err.Error())
+		return
+	}
+	user, err := service.UserService.LoginUser(req)
+	if err != nil {
+		c.JSON(err.Status, err)
+		return
+	}
+	c.JSON(http.StatusOK, user.Marshaller(c.GetHeader("X-Public") == "true"))
+}

@@ -1,0 +1,15 @@
+# for this to work install rest client extension in vscode
+### Valid
+@host= localhost:8888
+
+POST http://{{host}}/users HTTP/1.1
+content-type: application/json
+
+{
+  "first_name": "rishi",
+  "last_name": "jain",
+  "email": "lp@g.com",
+  "password": "abc",
+  "status": "active",
+  "date_created": ""
+}

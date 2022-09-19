@@ -16,6 +16,7 @@ var (
 	selectStmt          = "SELECT id, first_name,last_name,email,date_created,status from users where id=?;"
 	delStmt             = "DELETE FROM users WHERE id=?;"
 	getUserbyStatusStmt = "SELECT id,first_name,last_name,email,date_created,status from users where status=?;"
+	getUserbyEmailStmt  = "SELECT id,first_name,last_name,email,date_created,status from users where email=? and password=? and status=?;"
 )
 
 func (user *User) Get() *errors.RestErr {
@@ -43,6 +44,22 @@ func (user *User) Get() *errors.RestErr {
 	// user.DateCreated = result.DateCreated
 	// user.Email = result.Email
 	// return nil
+}
+
+func (user *User) GetUserByEmail() *errors.RestErr {
+	stmt, err := users_db.Client.Prepare(getUserbyEmailStmt)
+
+	if err != nil {
+		logger.Error("error while running prepared stmt for getting user by email", err)
+		return errors.InternalServerError("error while preparing stmt for getting user by email")
+	}
+	defer stmt.Close()
+	row := stmt.QueryRow(user.Email, user.Password, "active")
+	if err := row.Scan(&user.Id, &user.FirstName, &user.LastName, &user.Email, &user.DateCreated, &user.Status); err != nil {
+		logger.Error("error while preparing stmt for getting user by email", err)
+		return mysql_utils.ParseError(err)
+	}
+	return nil
 }
 
 func (user *User) Save() *errors.RestErr {

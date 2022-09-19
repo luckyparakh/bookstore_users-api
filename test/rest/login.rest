@@ -1,0 +1,21 @@
+# no user
+@host= localhost:8888
+
+POST http://{{host}}/users/login HTTP/1.1
+content-type: application/json
+
+{
+  "email": "lp@g.com",
+  "password": "abcabc"
+}
+
+###
+@host= localhost:8888
+
+POST http://{{host}}/users/login HTTP/1.1
+content-type: application/json
+
+{
+  "email": "lp@g.com",
+  "password": "abc"
+}
